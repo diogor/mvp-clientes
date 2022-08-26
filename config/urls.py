@@ -16,25 +16,49 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
-from rest_framework import routers
+from django.urls import path, include, re_path
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import routers, permissions
 from rest_framework.authtoken import views as token_views
-from apps.users.views import ConfirmarTelefone, PerfilViewSet, GrupoViewSet
+from apps.users.views import ConfirmarTelefone, PerfilViewSet
 
 
 router = routers.SimpleRouter()
-router.register(r'perfis', PerfilViewSet)
-router.register(r'grupos', GrupoViewSet)
+router.register(r"perfis", PerfilViewSet)
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api-token-auth/', token_views.obtain_auth_token),
-    path('confirmar-telefone/', ConfirmarTelefone.as_view()),
-] + static(
-        settings.STATIC_URL, document_root=settings.STATIC_ROOT
-    ) + static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-    )
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Clientes REST API",
+        default_version="v1",
+        description="Api de Clientes MVP",
+        contact=openapi.Contact(email="diogo@dr6.com.br"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
+
+urlpatterns = (
+    [
+        path("admin/", admin.site.urls),
+        path("api-auth/", include("rest_framework.urls")),
+        path("api-token-auth/", token_views.obtain_auth_token),
+        path("confirmar-telefone/", ConfirmarTelefone.as_view()),
+        re_path(
+            r"^swagger(?P<format>\.json|\.yaml)$",
+            schema_view.without_ui(cache_timeout=0),
+            name="schema-json",
+        ),
+        re_path(
+            r"^docs/$",
+            schema_view.with_ui("swagger", cache_timeout=0),
+            name="schema-swagger-ui",
+        ),
+        path("clientes/", include("apps.clientes.urls")),
+    ]
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)
 
 urlpatterns += router.urls
