@@ -70,7 +70,6 @@ SPECTACULAR_SETTINGS = {
     "SERVE_PERMISSIONS": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
-    "PREPROCESSING_HOOKS": ["config.openapi.preprocessing_filter"],
 }
 
 INSTALLED_APPS = [
