@@ -60,6 +60,17 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Clientes REST API",
+    "DESCRIPTION": "Api de Clientes MVP",
+    "VERSION": "0.1",
+    "SERVE_PERMISSIONS": [
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ],
+    "PREPROCESSING_HOOKS": ["config.openapi.preprocessing_filter"],
 }
 
 INSTALLED_APPS = [
@@ -69,7 +80,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "drf_yasg",
+    "drf_spectacular",
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
