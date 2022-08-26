@@ -11,8 +11,9 @@
     ```bash
     poetry run python manage.py migrate
     ```
-- Iniciar o servidor local:
+- Compoilar arquivos estáticos e iniciar o servidor local:
     ```bash
+    poetry run python manage.py collectstatic 
     poetry run python manage.py runserver
     ```
 
