@@ -18,4 +18,8 @@
     ```
 
 ## Documentação
-Acesse a referência da API em `/docs`
+- Atualizar o schema:
+    ```bash
+    poetry run python manage.py spectacular --file schema.yml
+    ```
+- Acesse a referência da API em `/docs`
