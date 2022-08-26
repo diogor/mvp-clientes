@@ -68,7 +68,7 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Api de Clientes MVP",
     "VERSION": "0.1",
     "SERVE_PERMISSIONS": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
     "PREPROCESSING_HOOKS": ["config.openapi.preprocessing_filter"],
 }
