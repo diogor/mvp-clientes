@@ -3,7 +3,11 @@ from .models import Cliente
 
 
 class ClienteSerializer(serializers.ModelSerializer):
+    idade = serializers.SerializerMethodField()
+
+    def get_idade(self, obj) -> int:
+        return obj.idade
+
     class Meta:
         model = Cliente
-        fields = "__all__"
-        read_only_fields = ("id", "idade")
+        exclude = ()

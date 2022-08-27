@@ -1,3 +1,4 @@
+from math import floor
 from datetime import date
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -13,4 +14,4 @@ class Cliente(models.Model):
 
     @property
     def idade(self) -> int:
-        return (date.today() - self.data_nascimento).years
+        return int(floor((date.today() - self.data_nascimento).days / 365.25))
